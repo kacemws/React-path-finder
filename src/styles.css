@@ -1,0 +1,10 @@
+.card-wrapper {
+  max-height: 40%;
+  width: 40%;
+}
+
+@media only screen and (max-width: 768px) {
+  .card-wrapper {
+    width: 75%;
+  }
+}
