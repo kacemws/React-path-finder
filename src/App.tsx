@@ -75,6 +75,7 @@ export default function Home() {
             action={
               <End>
                 <Button
+                  disabled={message == ""}
                   overrides={{
                     BaseButton: {
                       style: {
