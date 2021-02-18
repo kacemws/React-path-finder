@@ -1,4 +1,4 @@
-import { styled, useStyletron } from "baseui";
+import { styled } from "baseui";
 import { Card, StyledBody } from "baseui/card";
 import { Button } from "baseui/button";
 
@@ -6,7 +6,6 @@ import { Textarea } from "baseui/textarea";
 import { SIZE } from "baseui/input";
 
 import { useState } from "react";
-import { Select } from "baseui/select";
 
 import "./styles.css";
 
@@ -19,6 +18,7 @@ const End = styled("div", {
 export default function Home() {
   const [message, setMessage] = useState<number | undefined | string>("");
   const [pattern, setPattern] = useState<number | undefined | string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   return (
     <div
       className="container"
@@ -71,6 +71,24 @@ export default function Home() {
             <End>
               <Button
                 disabled={message == "" || pattern == ""}
+                isLoading={loading}
+                onClick={async (_) => {
+                  setLoading(true);
+                  try {
+                    const rawAns = await fetch("http://localhost:8000/find", {
+                      method: "POST",
+                      body: JSON.stringify({
+                        message,
+                        pattern,
+                      }),
+                    });
+                    const resp = await rawAns.json();
+                    setLoading(false);
+                    console.log(resp);
+                  } catch (e) {
+                    setLoading(false);
+                  }
+                }}
                 overrides={{
                   BaseButton: {
                     style: {
