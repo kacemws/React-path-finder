@@ -3,6 +3,12 @@
   width: 40%;
 }
 
+.ay.az.b1.b0.bx.bz.ah.aj.c0.c1.am.ao.an.ap.aq.as.ar.at.c2.c3.c4.bg.c5.c6.c7.c8.c9,
+.aj.ah.dh.c3.c4.bc.di.bu.dj.bg.c9 {
+  border-radius: 8px;
+  background-color: #e1e1e1;
+}
+
 @media only screen and (max-width: 768px) {
   .card-wrapper {
     width: 75%;

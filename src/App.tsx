@@ -1,11 +1,12 @@
 import { styled, useStyletron } from "baseui";
 import { Card, StyledBody } from "baseui/card";
-import { Input } from "baseui/input";
 import { Button } from "baseui/button";
 
-import { FormControl } from "baseui/form-control";
+import { Textarea } from "baseui/textarea";
+import { SIZE } from "baseui/input";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Select } from "baseui/select";
 
 import "./styles.css";
 
@@ -29,6 +30,10 @@ const End = styled("div", {
 });
 
 export default function Home() {
+  const [value, setValue] = useState<any>([
+    { label: "Encrypt", id: "encrypt" },
+  ]);
+  const [message, setMessage] = useState<number | undefined | string>("");
   return (
     <App>
       <Centered>
@@ -44,6 +49,7 @@ export default function Home() {
                   boxShadow: " 0px 1px 3px 2px #4a4b53",
                   display: "flex",
                   flexDirection: "column",
+                  padding: "0 1rem",
                 },
               },
               Title: {
@@ -55,15 +61,13 @@ export default function Home() {
                   display: "flex",
                   justifyContent: "flex-start",
                   alignItems: "center",
-                  padding: " 0 1rem",
                 },
               },
 
               Body: {
                 style: {
-                  backgroundColor: "red",
                   width: "100%",
-                  flex: 1,
+                  maxWidth: "100%",
                 },
               },
             }}
@@ -87,12 +91,46 @@ export default function Home() {
                     },
                   }}
                 >
-                  Generate
+                  {value[0].id == "encrypt"
+                    ? "Start Encrypting"
+                    : "Start Dycrepting"}
                 </Button>
               </End>
             }
           >
-            <StyledBody></StyledBody>
+            <StyledBody>
+              <Select
+                clearable={false}
+                options={[
+                  { label: "Encrypt", id: "encrypt" },
+                  { label: "Decrypt", id: "decrypt" },
+                ]}
+                value={value}
+                placeholder="Select operation"
+                onChange={(params) => setValue(params.value)}
+              />
+              <div
+                className="textArea-wrapper"
+                style={{
+                  marginTop: "1rem",
+                }}
+              >
+                <Textarea
+                  value={message}
+                  onChange={(e) => {
+                    setMessage((e.target as HTMLTextAreaElement).value);
+                  }}
+                  size={SIZE.large}
+                  placeholder={
+                    value[0].id == "encrypt"
+                      ? "Message to encrypt"
+                      : "Message to decrypt"
+                  }
+                  clearable
+                  clearOnEscape
+                />
+              </div>
+            </StyledBody>
           </Card>
         </div>
       </Centered>
