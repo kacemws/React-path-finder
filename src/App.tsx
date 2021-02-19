@@ -11,6 +11,7 @@ import "./styles.css";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import Editor from "./editor";
 
 const End = styled("div", {
   display: "flex",
@@ -26,13 +27,15 @@ export default function Home() {
     <div
       className="container"
       style={{
-        height: "100vh",
+        minHeight: "100vh",
+        height: "100%",
         width: "100vw",
         backgroundColor: "#121212",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        overflowX: "hidden",
       }}
     >
       <div className="card-wrapper">
@@ -114,28 +117,14 @@ export default function Home() {
           }
         >
           <StyledBody>
-            <ReactQuill
-              theme="snow"
-              value={message}
-              onChange={setMessage}
-              style={{
-                backgroundColor: "#e1e1e1",
-              }}
-            />
+            <Editor onChange={setMessage} value={message} />
             <div
               className="textArea-wrapper"
               style={{
                 marginTop: "1rem",
               }}
             >
-              <ReactQuill
-                theme="snow"
-                value={pattern}
-                onChange={setPattern}
-                style={{
-                  backgroundColor: "#e1e1e1",
-                }}
-              />
+              <Editor onChange={setPattern} value={pattern} />
             </div>
           </StyledBody>
         </Card>
