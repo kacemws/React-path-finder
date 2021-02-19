@@ -9,6 +9,9 @@ import { useState } from "react";
 
 import "./styles.css";
 
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
 const End = styled("div", {
   display: "flex",
   alignItems: "center",
@@ -16,8 +19,8 @@ const End = styled("div", {
 });
 
 export default function Home() {
-  const [message, setMessage] = useState<number | undefined | string>("");
-  const [pattern, setPattern] = useState<number | undefined | string>("");
+  const [message, setMessage] = useState<any>("");
+  const [pattern, setPattern] = useState<any>("");
   const [loading, setLoading] = useState<boolean>(false);
   return (
     <div
@@ -111,15 +114,13 @@ export default function Home() {
           }
         >
           <StyledBody>
-            <Textarea
+            <ReactQuill
+              theme="snow"
               value={message}
-              onChange={(e) => {
-                setMessage((e.target as HTMLTextAreaElement).value);
+              onChange={setMessage}
+              style={{
+                backgroundColor: "#e1e1e1",
               }}
-              size={SIZE.compact}
-              placeholder={"Message"}
-              clearable
-              clearOnEscape
             />
             <div
               className="textArea-wrapper"
@@ -127,15 +128,13 @@ export default function Home() {
                 marginTop: "1rem",
               }}
             >
-              <Textarea
+              <ReactQuill
+                theme="snow"
                 value={pattern}
-                onChange={(e) => {
-                  setPattern((e.target as HTMLTextAreaElement).value);
+                onChange={setPattern}
+                style={{
+                  backgroundColor: "#e1e1e1",
                 }}
-                size={SIZE.compact}
-                placeholder={"Pattern"}
-                clearable
-                clearOnEscape
               />
             </div>
           </StyledBody>
