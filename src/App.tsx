@@ -80,17 +80,31 @@ export default function Home() {
                 isLoading={loading}
                 onClick={async (_) => {
                   setLoading(true);
+                  var span = document.createElement("span");
+                  span.innerHTML = pattern;
+                  const auxPattern = span.textContent || span.innerText;
                   try {
                     const rawAns = await fetch("http://localhost:8000/find", {
                       method: "POST",
                       body: JSON.stringify({
                         message,
-                        pattern,
+                        pattern: auxPattern,
                       }),
                     });
                     const resp = await rawAns.json();
                     setLoading(false);
-                    console.log(resp);
+                    let auxMessage = message as string;
+                    resp.message.forEach((pos: any, index: number) => {
+                      const before = auxMessage.substring(
+                        0,
+                        pos + "<u></u>".length * index
+                      );
+                      const after = auxMessage.substring(
+                        pos + auxPattern.length + "<u></u>".length * index
+                      );
+                      auxMessage = before + "<u>" + auxPattern + "</u>" + after;
+                    });
+                    setMessage(auxMessage);
                   } catch (e) {
                     setLoading(false);
                   }
