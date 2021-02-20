@@ -84,13 +84,16 @@ export default function Home() {
                   span.innerHTML = pattern;
                   const auxPattern = span.textContent || span.innerText;
                   try {
-                    const rawAns = await fetch("http://localhost:8000/find", {
-                      method: "POST",
-                      body: JSON.stringify({
-                        message,
-                        pattern: auxPattern,
-                      }),
-                    });
+                    const rawAns = await fetch(
+                      `${process.env.REACT_APP_API_URL}find`,
+                      {
+                        method: "POST",
+                        body: JSON.stringify({
+                          message,
+                          pattern: auxPattern,
+                        }),
+                      }
+                    );
                     const resp = await rawAns.json();
                     setLoading(false);
                     let auxMessage = message as string;
